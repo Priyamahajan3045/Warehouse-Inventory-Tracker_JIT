@@ -2,17 +2,21 @@ package com.warehouse;
 
 public class Main {
     public static void main(String[] args) {
-        Product laptop = new Product(1, "Laptop", 5);
+        Warehouse warehouse = new Warehouse();
+        AlertService alertService = new AlertService();
 
-        laptop.increaseStock(10);
-        System.out.println("Current stock: " + laptop.getQuantity()); // 10
+        // Register observer
+        warehouse.addObserver(alertService);
 
-        laptop.decreaseStock(6);
-        System.out.println("After selling 6: " + laptop.getQuantity()); // 4
+        // 1️⃣ Add new product
+        warehouse.addProduct(1, "Laptop", 5);
 
-        if (laptop.getQuantity() < laptop.getReorderThreshold()) {
-            System.out.println("⚠️ Low stock for " + laptop.getName() +
-                               " - only " + laptop.getQuantity() + " left!");
-        }
+        // 2️⃣ Receive shipment of 10 units
+        warehouse.receiveShipment(1, 10);
+
+        // 3️⃣ Fulfill 6 orders
+        warehouse.fulfillOrder(1, 6);
+
+        // 4️⃣ System should trigger automatic alert when low stock (4 left)
     }
 }

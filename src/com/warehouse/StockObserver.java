@@ -1,5 +1,5 @@
 package com.warehouse;
 
-public class StockObserver {
-
+public interface StockObserver {
+    void onLowStock(Product product);
 }
