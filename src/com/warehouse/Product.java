@@ -13,7 +13,7 @@ public class Product {
         this.quantity = 0; // initially 0 stock
     }
 
-    // Getters and Setters (No direct field access outside)
+    // Getters and Setters 
     public int getId() {
         return id;
     }

@@ -1,22 +1,56 @@
 package com.warehouse;
+import com.warehouse.Warehouse;
+import com.warehouse.WarehouseManager;
+
 
 public class Main {
     public static void main(String[] args) {
-        Warehouse warehouse = new Warehouse();
+
         AlertService alertService = new AlertService();
 
-        // Register observer
-        warehouse.addObserver(alertService);
+        // Create warehouse manager
+        WarehouseManager manager = new WarehouseManager();
 
-        // 1️⃣ Add new product
-        warehouse.addProduct(1, "Laptop", 5);
+        // Add multiple warehouses
+        manager.addWarehouse("Central");
+        manager.addWarehouse("North");
 
-        // 2️⃣ Receive shipment of 10 units
-        warehouse.receiveShipment(1, 10);
+        manager.showWarehouses();
 
-        // 3️⃣ Fulfill 6 orders
-        warehouse.fulfillOrder(1, 6);
+        // Add products to warehouses
+        Warehouse central = manager.getWarehouse("Central");
+        Warehouse north = manager.getWarehouse("North");
 
-        // 4️⃣ System should trigger automatic alert when low stock (4 left)
+        central.addObserver(alertService);
+        north.addObserver(alertService);
+
+        Product laptop = new Product(1, "Laptop", 5);
+        Product phone = new Product(2, "Smartphone", 3);
+
+        central.addProduct(laptop);
+        north.addProduct(phone);
+
+        // Threads simulate simultaneous updates
+        Thread t1 = new Thread(() -> {
+            central.receiveShipment(1, 10);
+            central.fulfillOrder(1, 6);
+        });
+
+        Thread t2 = new Thread(() -> {
+            north.receiveShipment(2, 5);
+            north.fulfillOrder(2, 4);
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\n✅ Simulation complete!");
     }
 }
