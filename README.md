@@ -1,39 +1,56 @@
-📌 Overview
+# Warehouse Inventory Tracker
 
-The Warehouse Inventory Tracker is a simple Java-based console application designed to manage stock items in a warehouse.
-It allows adding products, updating stock levels, and generating low-stock alerts.
-This project is developed as part of a step-wise learning process (Day 1–3 completed).
+📌 **Overview**
 
-💡 Features (Completed till Day 3)
+The Warehouse Inventory Tracker is a **Java-based console application** designed to manage stock items across multiple warehouses. It allows adding products, updating stock levels, and generating **automatic low-stock alerts**. The project uses a modular structure for easy extension.
 
-Add and manage product details (ID, name, quantity, reorder level)
+💡 **Features (Completed till Today)**
 
-Increase or decrease product stock
+- Add and manage product details (ID, name, quantity, reorder level)  
+- Manage multiple warehouses  
+- Increase or decrease product stock  
+- Automatic low-stock alerts when quantity goes below threshold  
+- Observer pattern implementation for alerts (`AlertService`)  
+- Thread-safe stock updates simulating concurrent warehouse operations  
+- Modular structure using multiple Java classes:  
+  - `Product.java` – Product details and stock management  
+  - `Warehouse.java` – Individual warehouse operations  
+  - `WarehouseManager.java` – Manage multiple warehouses  
+  - `Main.java` – Simulation of warehouse operations with threads  
 
-Automatic low-stock alerts when quantity goes below threshold
+🧩 **Technologies Used**
 
-Modular structure using multiple Java classes (Product, Main, etc.)
+- **Language:** Java (Core Java)  
+- **IDE:** Eclipse  
+- **Version Control:** Git & GitHub  
 
-Easy to extend with more warehouse services
+🚀 **How to Run**
 
-🧩 Technologies Used
+1. Open the project in Eclipse IDE  
+2. Navigate to `Main.java` inside `src/com/warehouse/`  
+3. Run the program → It will display **warehouse operations and product stock updates** in the console  
 
-Language: Java (Core Java)
+🖥️ **Output Example**
+🏭 Warehouse added: Central
+🏭 Warehouse added: North
 
-IDE: Eclipse
+📦 Registered Warehouses:
 
-Version Control: Git & GitHub
+Central
 
-🚀 How to Run
+North
 
-Open the project in Eclipse IDE
+Product added: Laptop (ID: 1)
+Product added: Smartphone (ID: 2)
 
-Navigate to Main.java inside src/com/warehouse/
+📦 Received shipment of 10 for Laptop. Total: 10
+📦 Received shipment of 5 for Smartphone. Total: 5
 
-Run the program → It will display product stock operations in the console.
+🛒 Fulfilled order of 6 for Laptop. Remaining: 4
+🛒 Fulfilled order of 4 for Smartphone. Remaining: 1
 
-Output Example:
+⚠️ ALERT: Low stock for Laptop - only 4 left!
+⚠️ ALERT: Low stock for Smartphone - only 1 left!
 
-Current stock: 10
-After selling 6: 4
-⚠️ Low stock for Laptop - only 4 left!
+✅ Simulation complete!
+
