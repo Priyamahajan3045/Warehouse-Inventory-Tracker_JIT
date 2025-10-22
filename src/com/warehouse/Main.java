@@ -1,44 +1,42 @@
 package com.warehouse;
-import com.warehouse.Warehouse;
-import com.warehouse.WarehouseManager;
-
 
 public class Main {
     public static void main(String[] args) {
 
         AlertService alertService = new AlertService();
-
-        // Create warehouse manager
         WarehouseManager manager = new WarehouseManager();
 
-        // Add multiple warehouses
-        manager.addWarehouse("Central");
-        manager.addWarehouse("North");
+        // Load previous inventory data
+        InventoryPersistence.loadData(manager);
 
-        manager.showWarehouses();
+        // Add warehouses if not already present
+        if (manager.getWarehouse("Central") == null) manager.addWarehouse("Central");
+        if (manager.getWarehouse("North") == null) manager.addWarehouse("North");
 
-        // Add products to warehouses
         Warehouse central = manager.getWarehouse("Central");
         Warehouse north = manager.getWarehouse("North");
 
+        // Add observers
         central.addObserver(alertService);
         north.addObserver(alertService);
 
-        Product laptop = new Product(1, "Laptop", 5);
-        Product phone = new Product(2, "Smartphone", 3);
+        // If no products, add default ones
+        if (central.getInventory().isEmpty()) {
+            central.addProduct(new Product(1, "Laptop", 5));
+        }
+        if (north.getInventory().isEmpty()) {
+            north.addProduct(new Product(2, "Smartphone", 3));
+        }
 
-        central.addProduct(laptop);
-        north.addProduct(phone);
-
-        // Threads simulate simultaneous updates
+        // Simulate concurrent operations
         Thread t1 = new Thread(() -> {
-            central.receiveShipment(1, 10);
-            central.fulfillOrder(1, 6);
+            central.receiveShipment(1, 5);
+            central.fulfillOrder(1, 4);
         });
 
         Thread t2 = new Thread(() -> {
-            north.receiveShipment(2, 5);
-            north.fulfillOrder(2, 4);
+            north.receiveShipment(2, 3);
+            north.fulfillOrder(2, 2);
         });
 
         t1.start();
@@ -51,6 +49,9 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println("\n✅ Simulation complete!");
+        // Save data after operations
+        InventoryPersistence.saveData(manager);
+
+        System.out.println("\n✅ Day 5 Simulation complete with file persistence!");
     }
 }

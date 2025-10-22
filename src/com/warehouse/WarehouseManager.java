@@ -24,4 +24,8 @@ public class WarehouseManager {
             System.out.println("- " + name);
         }
     }
+
+    public Map<String, Warehouse> getWarehouses() {
+        return warehouses;
+    }
 }

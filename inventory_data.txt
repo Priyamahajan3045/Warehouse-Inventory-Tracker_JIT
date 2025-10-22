@@ -1,0 +1,2 @@
+Central,1,Laptop,1,5
+North,2,Smartphone,1,3

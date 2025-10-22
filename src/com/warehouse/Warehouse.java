@@ -48,7 +48,9 @@ public class Warehouse {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getName() { return name; }
+
+    public Map<Integer, Product> getInventory() {
+        return inventory;
     }
 }
